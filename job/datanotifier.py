@@ -30,7 +30,6 @@ class SensorDataNotifier:
       for observer in self.__observers:
         observer.notify("1")
       time.sleep(1)
-    log("Job Finish")
 
   def start(self):
     threading.Thread(target=self.job).start()

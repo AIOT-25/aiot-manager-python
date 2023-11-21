@@ -1,3 +1,8 @@
+"""
+powermgmt
+=============
+WISE-4012로부터 Sensor 데이터 수집 및 데이터 notify 하는 역할 수행
+"""
 import threading
 import time
 from util.logger import log
@@ -8,7 +13,7 @@ class PowerManagement:
      notifier.register(self)
 
   def notify(self, value):
-    print(f"Data Saver: value")
+    print(f"Power Mgmt: {value}")
 
   def job(self):
     log("Job start")
