@@ -1,9 +1,10 @@
 import threading
 import time
+from queue import Queue
 from protocol.modbus import ModbusClientFactory, DUMMY
 from util.logger import Logger
-from job.datacollector import get_collect_sensor_data_thread
-from job.powermgmt import get_power_mgmt_thread
+from job.datanotifier import SensorDataNotifier
+from job.powermgmt import PowerManagement
 from config import ManagerConfig
 
 c = ManagerConfig()
@@ -16,10 +17,12 @@ flag_thread_stop = threading.Event()
 if __name__ == '__main__':
   Logger.create_logger()
 
+  sensor_listeners = Queue()
+
   modbusClient = ModbusClientFactory.get_client(DUMMY, c.get_modbus_config())
 
-  sensor_thread = get_collect_sensor_data_thread(modbusClient, flag_thread_stop, flag_init_sensor_thread)
-  power_management_thread = get_power_mgmt_thread(c, flag_thread_stop, flag_init_sensor_thread)
+  notifier = SensorDataNotifier(modbusClient)
+  notifier.start()
 
-  sensor_thread.start()
-  power_management_thread.start()
+  powermgmt = PowerManagement(notifier)
+  powermgmt.start()
