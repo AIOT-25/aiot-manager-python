@@ -7,6 +7,8 @@ WISE-4012로부터 Sensor 데이터 수집 및 데이터 notify 하는 역할 �
 import threading
 import time
 from util.logger import log
+import random
+
 
 class SensorDataNotifier:
   def __init__(self, client):
@@ -19,8 +21,8 @@ class SensorDataNotifier:
   def unregister(self, observer):
     self.__observers.remove(observer)
 
-  def __read_sensor_data():
-    return [1, 2, 3, 4, 5]
+  def __read_sensor_data(self):
+    return random.sample(range(1,11), 5)
 
   def __job(self):
     log("Modbus 연결 중...")
@@ -31,7 +33,7 @@ class SensorDataNotifier:
     log("Job start")
     while True:
       for observer in self.__observers:
-        observer.notify("1")
+        observer.notify(self.__read_sensor_data())
       time.sleep(1)
 
   def start(self):
