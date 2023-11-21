@@ -19,7 +19,10 @@ class SensorDataNotifier:
   def unregister(self, observer):
     self.__observers.remove(observer)
 
-  def job(self):
+  def __read_sensor_data():
+    return [1, 2, 3, 4, 5]
+
+  def __job(self):
     log("Modbus 연결 중...")
     if not self.__client.open():
       log("Modbus 연결에 실패하였습니다. Host와 Port를 확인해주세요.")
@@ -32,5 +35,5 @@ class SensorDataNotifier:
       time.sleep(1)
 
   def start(self):
-    threading.Thread(target=self.job).start()
+    threading.Thread(target=self.__job).start()
 

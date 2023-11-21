@@ -17,7 +17,7 @@ class SensorDataSaver:
   def notify(self, value):
     print(f"Data Saver: {value}")
 
-  def job(self):
+  def __job(self):
       log("Job start")
 
       while True:
@@ -25,7 +25,7 @@ class SensorDataSaver:
         time.sleep(1)
 
   def start(self):
-    threading.Thread(target=self.job).start()
+    threading.Thread(target=self.__job).start()
 
   def __del__(self):
     self.__notifier.unregister(self)

@@ -1,7 +1,7 @@
 """
 powermgmt
 =============
-WISE-4012로부터 Sensor 데이터 수집 및 데이터 notify 하는 역할 수행
+Data Notifier로부터 전달받은 센서 데이터를 이용하여 LSTM 모델에 넣어 모터 효율화하는 작업 수행
 """
 import threading
 import time
@@ -15,7 +15,7 @@ class PowerManagement:
   def notify(self, value):
     print(f"Power Mgmt: {value}")
 
-  def job(self):
+  def __job(self):
     log("Job start")
 
     while True:
@@ -23,7 +23,7 @@ class PowerManagement:
       time.sleep(1)
 
   def start(self):
-    threading.Thread(target=self.job).start()
+    threading.Thread(target=self.__job).start()
 
   def __del__(self):
      self.__notifier.unregister(self)   
