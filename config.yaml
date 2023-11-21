@@ -1,0 +1,13 @@
+wisepaas:
+  nodeId: f73bccb7-9f8f-43f0-9885-fa8bb4007cec
+  deviceId: 6lQguETNe7sT
+  dccs:
+    apiUrl: https://api-dccs-ensaas.sa.wise-paas.com/
+    credentialKey: ce1d18d989864138e1d55203fd80f32m
+  edgeTag:
+    count: 5
+    tag1: energy
+    tag2: inter_flow
+    tag3: outer_flow
+    tag4: volt
+    tag5: current
