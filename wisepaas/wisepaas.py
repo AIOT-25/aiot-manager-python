@@ -7,9 +7,8 @@ from wisepaasdatahubedgesdk.Common.Utils import RepeatedTimer
 import time
 
 def get_edge_agent_options(config):
-    print(config['nodeId'].strip())
     return EdgeAgentOptions(
-        reconnectInterval=1,
+        reconnectInterval=0.01,
         nodeId=config['nodeId'].strip(),
         type=constant.EdgeType['Gateway'],
         heartbeat=60,
@@ -21,7 +20,7 @@ def get_edge_agent_options(config):
         ),
     )
 
-class WisePaas:
+class WisePaasClient:
     def __init__(self, config):
         if config == None:
             raise("Config can't be None")
@@ -36,7 +35,10 @@ class WisePaas:
         edgeAgent.on_message = self.edgeAgent_on_message
         edgeAgent.connect()
         self.edgeAgent = edgeAgent
-        
+
+    def is_connected(self):
+        return not self.edgeAgent == None and self.edgeAgent.isConnected()
+
     def disconnect(self):
         self.edgeAgent.disconnect()        
 
@@ -71,6 +73,17 @@ class WisePaas:
             list.append(self.config["edgeTag"][f'tag{i}'])
         return list        
 
+    def save_edge_data(self, datas, retry=300):
+        if not self.is_connected():
+            return False
+        edgeData = EdgeData()
+        edgeList = self.get_edge_list()
+        deviceId = self.config["deviceId"]
+        for i in range(self.config["edgeTag"]["count"]):
+            edgeData.tagList.append(EdgeTag(deviceId, edgeList[i], datas[i]))
+        edgeData.timestamp = datetime.datetime.now()
+        for i in range(retry):
+            self.edgeAgent.sendData(data = edgeData)
 # edgeData = EdgeData()
 # total = 0
 # v = 12
