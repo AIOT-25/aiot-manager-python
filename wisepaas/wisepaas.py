@@ -84,29 +84,3 @@ class WisePaasClient:
         edgeData.timestamp = datetime.datetime.now()
         for i in range(retry):
             self.edgeAgent.sendData(data = edgeData)
-# edgeData = EdgeData()
-# total = 0
-# v = 12
-# while True:
-#     inter_flow = random.randint(1, 20)
-#     total += inter_flow
-#     if total > 200:
-#         outer_flow = inter_flow * 1.2
-#         energy = outer_flow * 15
-#         current = energy / v
-#     else:
-#         outer_flow = inter_flow * 0.8
-#         energy = outer_flow * 10
-#         current = energy / v
-#     total -= outer_flow
-   
-#     deviceId = '6lQguETNe7sT'
-#     edgeData.tagList.append(EdgeTag(deviceId, 'a', inter_flow))
-#     edgeData.tagList.append(EdgeTag(deviceId, 'b', outer_flow))
-#     edgeData.tagList.append(EdgeTag(deviceId, 'c', v))
-#     edgeData.tagList.append(EdgeTag(deviceId, 'd', energy))
-#     edgeData.timestamp = datetime.datetime.now()
-#     #edgeData.timestamp = datetime.datetime(2020,8,24,6,10,8)   # You can specify the time(local time) of data
-#     result = edgeAgent.sendData(data = edgeData)
-#     print(result)
-#     time.sleep(1) 
