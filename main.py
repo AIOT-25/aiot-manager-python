@@ -1,5 +1,6 @@
 import threading
 from protocol.modbus import ModbusClientFactory, DUMMY
+from wisepaas.wisepaas import WisePaasClient
 from util.logger import Logger
 from job.datanotifier import SensorDataNotifier
 from job.powermgmt import PowerManagement
@@ -17,12 +18,10 @@ if __name__ == '__main__':
   Logger.create_logger()
 
   modbusClient = ModbusClientFactory.get_client(DUMMY, c.get_modbus_config())
+  wisepaasClient = WisePaasClient(c.get_wisepaas_config())
 
   notifier = SensorDataNotifier(modbusClient)
   notifier.start()
 
-  datasaver = SensorDataSaver(c, notifier)
-  datasaver.start()
-
+  datasaver = SensorDataSaver(wisepaasClient, c, notifier)
   powermgmt = PowerManagement(notifier)
-  powermgmt.start()
