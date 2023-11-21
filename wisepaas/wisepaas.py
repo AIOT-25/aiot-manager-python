@@ -1,10 +1,8 @@
 import datetime
-import random
 from wisepaasdatahubedgesdk.EdgeAgent import EdgeAgent
 import wisepaasdatahubedgesdk.Common.Constants as constant
 from wisepaasdatahubedgesdk.Model.Edge import EdgeAgentOptions, MQTTOptions, DCCSOptions, EdgeData, EdgeTag, EdgeStatus, EdgeDeviceStatus, EdgeConfig, NodeConfig, DeviceConfig, AnalogTagConfig, DiscreteTagConfig, TextTagConfig
 from wisepaasdatahubedgesdk.Common.Utils import RepeatedTimer
-import time
 
 def get_edge_agent_options(config):
     return EdgeAgentOptions(
