@@ -9,3 +9,6 @@ class ManagerConfig:
 
   def get_wisepaas_config(self):
     return self.config['wisepaas']
+
+  def get_modbus_config(self):
+    return self.config['modbus']

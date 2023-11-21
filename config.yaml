@@ -11,3 +11,6 @@ wisepaas:
     tag3: outer_flow
     tag4: volt
     tag5: current
+modbus:
+  host: 172.20.10.8
+  port: 502
