@@ -15,9 +15,6 @@ class PowerManagement:
 
   def notify(self, value):
     print(f"Power Mgmt: {value}")
-
-  def __job(self, input_list):
-    log("Job start")
     # 모델 객체 생성
     m = model_loader.model_loader()
     # 임의로 만들어줌 나중에 매개변수 넣을 수 있으면 지워야함.
@@ -25,8 +22,12 @@ class PowerManagement:
     while True:
       # 여기에 코드 작성할 것!!!!
       # 모델 예측을 위해 인풋 리스트 필요함
-      m.predict(input_list)
-      time.sleep(1)
+      result = m.predict(input_list)
+      return result
+
+  def __job(self):
+    log("Job start")
+
 
   def start(self):
     threading.Thread(target=self.__job).start()
