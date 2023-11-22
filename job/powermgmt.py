@@ -6,6 +6,7 @@ Data Notifier로부터 전달받은 센서 데이터를 이용하여 LSTM 모델
 import threading
 import time
 from util.logger import log
+import model_loader
 
 class PowerManagement:
   def __init__(self, notifier):
@@ -15,11 +16,16 @@ class PowerManagement:
   def notify(self, value):
     print(f"Power Mgmt: {value}")
 
-  def __job(self):
+  def __job(self, input_list):
     log("Job start")
-
+    # 모델 객체 생성
+    m = model_loader.model_loader()
+    # 임의로 만들어줌 나중에 매개변수 넣을 수 있으면 지워야함.
+    input_list = []
     while True:
       # 여기에 코드 작성할 것!!!!
+      # 모델 예측을 위해 인풋 리스트 필요함
+      m.predict(input_list)
       time.sleep(1)
 
   def start(self):
