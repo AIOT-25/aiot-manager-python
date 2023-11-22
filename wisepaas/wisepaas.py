@@ -9,7 +9,7 @@ def get_edge_agent_options(config):
         reconnectInterval=0.01,
         nodeId=config['nodeId'].strip(),
         type=constant.EdgeType['Gateway'],
-        heartbeat=60,
+        heartbeat=60000,
         dataRecover = True,
         connectType = constant.ConnectType['DCCS'],
         DCCS = DCCSOptions(
