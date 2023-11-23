@@ -12,3 +12,6 @@ class ManagerConfig:
 
   def get_modbus_config(self):
     return self.config['modbus']
+  
+  def get_serial_config(self):
+    return self.config['serial']

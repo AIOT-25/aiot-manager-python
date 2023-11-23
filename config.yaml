@@ -8,9 +8,12 @@ wisepaas:
     count: 5
     tag1: Inlet_flow
     tag2: Outlet_flow
-    tag3: Volt
-    tag4: Power
-    tag5: Current
+    tag3: Current
+    tag4: Volt
+    tag5: Power
 modbus:
-  host: 172.20.10.8
+  host: 192.168.227.128
   port: 502
+serial:
+  port: /dev/cu.usbmodem101
+  baudrate: 9600
