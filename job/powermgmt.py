@@ -6,7 +6,7 @@ Data Notifier로부터 전달받은 센서 데이터를 이용하여 LSTM 모델
 import threading
 import time
 from util.logger import log
-import model_loader
+import ai.model_loader as model_loader
 
 class PowerManagement:
   def __init__(self, notifier):
