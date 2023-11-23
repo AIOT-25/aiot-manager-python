@@ -24,18 +24,18 @@ class SensorDataNotifier:
   def __read_sensor_data(self):
     return random.sample(range(1,11), 5)
 
-  def __job(self):
+  def __job(self, event_thread_stop):
     log("Modbus 연결 중...")
     if not self.__client.open():
       log("Modbus 연결에 실패하였습니다. Host와 Port를 확인해주세요.")
       return
 
     log("Job start")
-    while True:
+    while not event_thread_stop.is_set():
       for observer in self.__observers:
         observer.notify(self.__read_sensor_data())
       time.sleep(1)
 
-  def start(self):
-    threading.Thread(target=self.__job).start()
+  def start(self, event_thread_stop):
+    threading.Thread(target=self.__job, args={ event_thread_stop }).start()
 
