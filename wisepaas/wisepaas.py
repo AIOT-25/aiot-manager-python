@@ -74,10 +74,12 @@ class WisePaasClient:
     def save_edge_data(self, datas, retry=300):
         if not self.is_connected():
             return False
+        if datas == None:
+            return False
         edgeData = EdgeData()
         edgeList = self.get_edge_list()
         deviceId = self.config["deviceId"]
-        for i in range(self.config["edgeTag"]["count"]):
+        for i in range(len(datas)):
             edgeData.tagList.append(EdgeTag(deviceId, edgeList[i], datas[i]))
         edgeData.timestamp = datetime.datetime.now()
         for i in range(retry):
