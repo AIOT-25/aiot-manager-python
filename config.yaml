@@ -6,11 +6,11 @@ wisepaas:
     credentialKey: ce1d18d989864138e1d55203fd80f32m
   edgeTag:
     count: 5
-    tag1: a
-    tag2: b
-    tag3: c
-    tag4: d
-    tag5: e
+    tag1: Inlet_flow
+    tag2: Outlet_flow
+    tag3: Volt
+    tag4: Power
+    tag5: Current
 modbus:
   host: 172.20.10.8
   port: 502
