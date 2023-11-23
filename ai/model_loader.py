@@ -19,10 +19,11 @@ class model_loader:
         except:
             return False
 
-    def predict(self, new_input_flow):
+    def predict(self, new_input_flow, new_time_zones):
         if self.__model == None:
             raise Exception("Please load model first.")
         new_input_flow = new_input_flow.reshape((1, 10, 1))
-        predicted_output_flow = self.__model.predict(new_input_flow)
+        new_time_zones = new_time_zones.reshape((1, 10, 1))
+        predicted_output_flow = self.__model.predict([new_input_flow, new_time_zones])
         return predicted_output_flow[0][0]
 

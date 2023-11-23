@@ -7,20 +7,32 @@ from util.logger import log
 import sys
 import os
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
-
+import math
 from ai import model_loader as model_loader
+from protocol.serial import SerialController
 
 class PowerManagement:
   def __init__(self, notifier):
      self.__notifier = notifier
      self.__model = model_loader.model_loader()
+     self.__flow_datas = []
+     self.__time_zones = []
      notifier.register(self)
 
-  def notify(self, value):
-    # 임의로 만들어줌 나중에 매개변수 넣을 수 있으면 지워야함.
-    input_list = []
-    if self.__model.load_model():
-      self.__model.predict(input_list)
+  def notify(self, value, time):
+    if len(self.__datas) == 10 and len(self.__time_zones) == 10:
+        # predict 수행
+        if self.__model.load_model():
+            result = self.__model.predict([self.__datas, self.__time_zones])
+        self.__datas = []
+        self.__time_zones = []
+        # 모터 제어 코드?
+        # 이게 flow -> moter 출력값 (올림 진행)
+        moter_speed = math.ceil(result * 9.8)
+        SerialController.send(str(moter_speed)) # 이거 모터 제어 코드 맞나?
+    self.__datas.append(value)
+    self.__time_zones.append(time)
+
 
   def __del__(self):
      self.__notifier.unregister(self)   

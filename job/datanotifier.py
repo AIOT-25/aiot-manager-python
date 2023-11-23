@@ -54,7 +54,7 @@ class SerialSensorDataNotifier:
   def __read_sensor_data(self):
     try:
       splited = self.__controller.readline().split(" ")
-      return [float(splited[0]), float(splited[1]), int(splited[2].replace("\r\n", ""))]
+      return [float(splited[0]), float(splited[1]), int(splited[2], int(splited[3]).replace("\r\n", ""))]
     except:
       return None
 
@@ -69,7 +69,7 @@ class SerialSensorDataNotifier:
       sensor_data = self.__read_sensor_data()
       if not sensor_data == None:
         for observer in self.__observers:
-          observer.notify(sensor_data)
+          observer.notify(sensor_data[2], sensor_data[3])
       time.sleep(0.5)
 
   def start(self, event_thread_stop):
