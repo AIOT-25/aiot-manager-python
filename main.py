@@ -1,5 +1,5 @@
 import threading
-from protocol.modbus import ModbusClientFactory, DUMMY
+from protocol.modbus import ModbusClient
 from wisepaas.wisepaas import WisePaasClient
 from util.logger import Logger
 from job.datanotifier import SensorDataNotifier
@@ -19,7 +19,7 @@ if __name__ == '__main__':
   try:
     Logger.create_logger()
 
-    modbusClient = ModbusClientFactory.get_client(DUMMY, c.get_modbus_config())
+    modbusClient = ModbusClient(c.get_modbus_config())
     wisepaasClient = WisePaasClient(c.get_wisepaas_config())
 
     notifier = SensorDataNotifier(modbusClient)

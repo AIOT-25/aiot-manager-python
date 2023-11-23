@@ -1,16 +1,5 @@
 import pyModbusTCP.client
 
-DUMMY = 0
-REAL = 1
-
-class ModbusClientFactory:
-  @staticmethod
-  def get_client(type, config):
-    if type == DUMMY:
-      return DummyModbusClient(config)
-    else:
-      return ModbusClient(config)
-
 class ModbusClient:
   def __init__(self, config):
     self.config = config
@@ -21,15 +10,7 @@ class ModbusClient:
     return self.client.open()
 
   def is_connected(self):
-    return not self.client == None and self.client.is_connected()
+    return not self.client == None and self.client.is_open
   
-class DummyModbusClient:
-  def __init__(self, config):
-    self.config = config
-    self.client = None
-
-  def open(self):
-    return True
-
-  def is_connected(self):
-    return True
+  def get_client(self):
+    return self.client
