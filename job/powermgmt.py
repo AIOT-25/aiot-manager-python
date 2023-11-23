@@ -19,7 +19,7 @@ class PowerManagement:
      self.__time_zones = []
      notifier.register(self)
 
-  def notify(self, value, time):
+  def notify(self, values):
     if len(self.__datas) == 10 and len(self.__time_zones) == 10:
         # predict 수행
         if self.__model.load_model():
@@ -30,8 +30,8 @@ class PowerManagement:
         # 이게 flow -> moter 출력값 (올림 진행)
         moter_speed = math.ceil(result * 9.8)
         SerialController.send(str(moter_speed)) # 이거 모터 제어 코드 맞나?
-    self.__datas.append(value)
-    self.__time_zones.append(time)
+    self.__datas.append(values[0])
+    self.__time_zones.append(values[3])
 
 
   def __del__(self):
