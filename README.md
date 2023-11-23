@@ -20,7 +20,7 @@ tensorflow 설치 시 문제가 있는 경우 아래를 먼저 실행해주세�
 
 ## 실행
 
-모니터 실행을 원하시면 monitor 디렉터리 밑의 파이썬 파일을 실행하시면 됩니다.
+모니터 실행을 원하시면 아래 두 개 파일 중 원하는 파이썬 파일을 실행하시면 됩니다.
 
     python modbusmonitor.py
     python serialmonitor.py
