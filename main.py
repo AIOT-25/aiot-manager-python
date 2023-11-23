@@ -1,11 +1,10 @@
 import threading
-from protocol.modbus import ModbusClient
+from protocol.serial import SerialController
 from wisepaas.wisepaas import WisePaasClient
 from util.logger import Logger
-from job.datanotifier import SensorDataNotifier
+from job.datanotifier import SerialSensorDataNotifier
 from job.powermgmt import PowerManagement
 from job.datasaver import SensorDataSaver
-from job.seriallistener import SerialListener
 from config import ManagerConfig
 
 c = ManagerConfig()
@@ -19,18 +18,19 @@ if __name__ == '__main__':
   try:
     Logger.create_logger()
 
-    modbusClient = ModbusClient(c.get_modbus_config())
+    serial_config = c.get_serial_config()
+    serialController = SerialController(port=serial_config["port"], baudrate=serial_config["baudrate"])
+
     wisepaasClient = WisePaasClient(c.get_wisepaas_config())
 
-    notifier = SensorDataNotifier(modbusClient)
+    notifier = SerialSensorDataNotifier(serialController)
     notifier.start(flag_thread_stop)
 
     datasaver = SensorDataSaver(wisepaasClient, c, notifier)
     powermgmt = PowerManagement(notifier)
 
-    seriallistener = SerialListener()
-    seriallistener.start()
   except Exception as ex:
+    print(ex)
     flag_thread_stop.set()
     print("프로그램 실행 중 오류가 발생하였습니다.")
     exit(0)

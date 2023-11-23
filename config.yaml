@@ -14,3 +14,6 @@ wisepaas:
 modbus:
   host: 192.168.227.128
   port: 502
+serial:
+  port: /dev/cu.usbmodem101
+  baudrate: 9600
