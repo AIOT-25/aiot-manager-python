@@ -3,8 +3,6 @@ powermgmt
 =============
 Data Notifier로부터 전달받은 센서 데이터를 이용하여 LSTM 모델에 넣어 모터 효율화하는 작업 수행
 """
-import threading
-import time
 from util.logger import log
 import ai.model_loader as model_loader
 
@@ -24,13 +22,6 @@ class PowerManagement:
       # 모델 예측을 위해 인풋 리스트 필요함
       result = m.predict(input_list)
       return result
-
-  def __job(self):
-    log("Job start")
-
-
-  def start(self):
-    threading.Thread(target=self.__job).start()
 
   def __del__(self):
      self.__notifier.unregister(self)   
