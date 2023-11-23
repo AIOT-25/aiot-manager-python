@@ -22,7 +22,8 @@ class SensorDataNotifier:
     self.__observers.remove(observer)
 
   def __read_sensor_data(self):
-    return random.sample(range(1,11), 5)
+    regs = self.__client.get_client().read_holding_registers(0, 5)
+    return [regs[0], regs[1], regs[2], 12, regs[2] * 12] 
 
   def __job(self, event_thread_stop):
     log("Modbus 연결 중...")
