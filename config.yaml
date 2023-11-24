@@ -9,11 +9,14 @@ wisepaas:
     tag1: Inlet_flow
     tag2: Outlet_flow
     tag3: Current
-    tag4: Volt
+    tag4: a
     tag5: Power
 modbus:
   host: 192.168.227.128
   port: 502
 serial:
-  port: /dev/cu.usbmodem101
+  port: /dev/ttyACM0
+  baudrate: 9600
+serial2:
+  port: /dev/ttyACM1
   baudrate: 9600

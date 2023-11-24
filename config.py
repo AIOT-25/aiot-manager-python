@@ -15,3 +15,6 @@ class ManagerConfig:
   
   def get_serial_config(self):
     return self.config['serial']
+
+  def get_serial2_config(self):
+    return self.config['serial2']
