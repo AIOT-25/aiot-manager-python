@@ -22,6 +22,7 @@ class ModbusSensorDataNotifier:
     self.__observers.remove(observer)
 
   def __read_sensor_data(self):
+    print("Read sensor data")
     regs = self.__client.get_client().read_holding_registers(0, 5)
     return [regs[0], regs[1], regs[2], 12, regs[2] * 12] 
 
@@ -53,8 +54,9 @@ class SerialSensorDataNotifier:
 
   def __read_sensor_data(self):
     try:
-      splited = self.__controller.readline().split(" ")
-      return [float(splited[0]), float(splited[1]), int(splited[2]), int(splited[3]).replace("\r\n", "")]
+      data_raw = self.__controller.readline()
+      splited = data_raw.split(" ")
+      return [float(splited[0]), float(splited[1]), int(splited[2]), int(splited[3].replace("\r\n", ""))]
     except:
       return None
 
@@ -68,9 +70,12 @@ class SerialSensorDataNotifier:
     while not event_thread_stop.is_set():
       sensor_data = self.__read_sensor_data()
       if not sensor_data == None:
+        print(sensor_data)
         for observer in self.__observers:
           observer.notify(sensor_data)
       time.sleep(0.5)
+    self.__controller.close()
+    log("Job Finished")
 
   def start(self, event_thread_stop):
     threading.Thread(target=self.__job, args={ event_thread_stop }).start()
