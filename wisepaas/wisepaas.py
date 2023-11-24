@@ -71,7 +71,7 @@ class WisePaasClient:
             list.append(self.config["edgeTag"][f'tag{i}'])
         return list        
 
-    def save_edge_data(self, datas, retry=300):
+    def save_edge_data(self, datas, retry=1):
         if not self.is_connected():
             return False
         if datas == None:
