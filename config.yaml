@@ -9,7 +9,7 @@ wisepaas:
     tag1: Inlet_flow
     tag2: Outlet_flow
     tag3: Current
-    tag4: a
+    tag4: Time_zone
     tag5: Power
 modbus:
   host: 192.168.227.128
