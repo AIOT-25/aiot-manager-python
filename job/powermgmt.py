@@ -12,25 +12,26 @@ from ai import model_loader as model_loader
 from protocol.serial import SerialController
 
 class PowerManagement:
-  def __init__(self, notifier):
+  def __init__(self, notifier, serialController):
      self.__notifier = notifier
      self.__model = model_loader.model_loader()
      self.__flow_datas = []
      self.__time_zones = []
+     self.__serialController = serialController
      notifier.register(self)
 
   def notify(self, values):
-    if len(self.__datas) == 10 and len(self.__time_zones) == 10:
+    if len(self.__flow_datas) == 10 and len(self.__time_zones) == 10:
         # predict 수행
         if self.__model.load_model():
-            result = self.__model.predict([self.__datas, self.__time_zones])
-        self.__datas = []
+            result = self.__model.predict([self.__flow_datas, self.__time_zones])
+            motor_speed = math.ceil(result * 9.8)
+            serialController.send(str(motor_speed))
+        self.__flow_datas = []
         self.__time_zones = []
-        # 모터 제어 코드?
-        # 이게 flow -> moter 출력값 (올림 진행)
-        moter_speed = math.ceil(result * 9.8)
-        SerialController.send(str(moter_speed)) # 이거 모터 제어 코드 맞나?
-    self.__datas.append(values[0])
+        
+        
+    self.__flow_datas.append(values[0])
     self.__time_zones.append(values[3])
 
 
